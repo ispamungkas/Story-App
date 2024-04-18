@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_edit_text_password">Kata sandi harus setidaknya 8 kata</string>
+    <string name="email">Email</string>
+    <string name="email_error">Harap gunakan format email dengan benar</string>
+    <string name="password">Kata Sandi</string>
+    <string name="have_a_account">Sudah memiliki akun?</string>
+    <string name="register">Daftar Disini</string>
+    <string name="desc_dicoding_banner">Gambar dari dicoding</string>
+    <string name="login">Masuk</string>
+    <string name="register_now">Daftar Sekarang</string>
+    <string name="name">Nama</string>
+    <string name="join">Bergabung dengan kita</string>
+    <string name="desc_icon_register_succes">Gambar dari pendaftaran sukses</string>
+    <string name="back">Kembali</string>
+    <string name="story">Cerita</string>
+    <string name="description">Deskripsi Post</string>
+    <string name="date">Tanggal</string>
+    <string name="desc_add_post">Tombol untuk menambah post</string>
+    <string name="desc_menu_logout">Menu aksi keluar</string>
+    <string name="logout">Keluar</string>
+    <string name="post_date">Postingan terbuat</string>
+    <string name="add_new_story">Tambah Cerita Baru</string>
+    <string name="desc_post_image">Tampilan gambar dari postingan cerita</string>
+    <string name="camera">Kamera</string>
+    <string name="gallery">Galeri</string>
+    <string name="desc_camera">Tombol untuk membuka kamera</string>
+    <string name="desc_gallery">Tombol untuk membuka galeri</string>
+    <string name="upload">Unggah</string>
+    <string name="desc_upload">Tombol unggah postingan cerita</string>
+    <string name="description_label">Deskripsi</string>
+    <string name="greeting_story">Apakah anda siap untuk membagikan cerita?</string>
+    <string name="greeting_offering_input_data">Harap isi data anda</string>
+    <string name="warning">Terdapat sesuatu yang salah</string>
+    <string name="show_post">Lihat Post</string>
+    <string name="granted">Diizinkan</string>
+    <string name="denied">Tidak diizinkan</string>
+    <string name="app_name">Submission Aplikasi Story</string>
+    <string name="appwidget_text">Postingan Cerita</string>
+    <string name="add_widget">Tambah widget</string>
+    <string name="app_widget_description">Ini adalah deskripsi widget</string>
+    <string name="empty_text">Data Kosong</string>
+    <string name="pick_stack_widget">Anda mengklik image dengan index %1$s</string>
+    <string name="value_login">Berhasil Login</string>
+</resources>

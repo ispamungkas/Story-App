@@ -1,0 +1,66 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Base.Theme.SubmissionAplikasiStory" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSurfaceContainer">@color/primaryColor</item>
+    </style>
+
+    <style name="Base.Theme.SubmissionAplikasiStory.Action" parent="Theme.Material3.DayNight">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="iconTint">@color/white</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="colorSurfaceContainer">@color/primaryColor</item>
+    </style>
+
+    <style name="Base.Theme.SubmissionAplikasiStory.Action.ClearSurface" parent="Theme.Material3.DayNight">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnContainer">@color/white</item>
+        <item name="colorSurfaceContainer">@color/primaryColor</item>
+    </style>
+
+    <style name="Theme.SubmissionAplikasiStory" parent="Base.Theme.SubmissionAplikasiStory" />
+
+    <style name="PoppinsFont">
+        <item name="fontFamily">@font/poppins</item>
+    </style>
+
+    <style name="PoppinsFont.regular">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="PoppinsFont.regular.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="PoppinsFont.regular.bold.18dp">
+        <item name="android:textSize">18dp</item>
+    </style>
+
+
+    <style name="PoppinsFont.regular.bold.white">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="PoppinsFont.regular.primary">
+        <item name="android:textColor">@color/primaryColor</item>
+    </style>
+
+    <style name="Theme.SubmissionAplikasiStory.AppWidgetContainerParent" parent="@android:style/Theme.DeviceDefault">
+        <!-- Radius of the outer bound of widgets to make the rounded corners -->
+        <item name="appWidgetRadius">16dp</item>
+        <!--
+        Radius of the inner view's bound of widgets to make the rounded corners.
+        It needs to be 8dp or less than the value of appWidgetRadius
+        -->
+        <item name="appWidgetInnerRadius">8dp</item>
+    </style>
+
+    <style name="Theme.SubmissionAplikasiStory.AppWidgetContainer" parent="Theme.SubmissionAplikasiStory.AppWidgetContainerParent">
+        <!-- Apply padding to avoid the content of the widget colliding with the rounded corners -->
+        <item name="appWidgetPadding">16dp</item>
+    </style>
+</resources>
