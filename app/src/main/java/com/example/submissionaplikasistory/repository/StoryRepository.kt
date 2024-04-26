@@ -18,8 +18,11 @@ import com.example.submissionaplikasistory.datasource.model.DetailStoryResponse
 import com.example.submissionaplikasistory.datasource.model.ListStoryItem
 import com.example.submissionaplikasistory.datasource.model.PostResponse
 import com.example.submissionaplikasistory.datasource.model.StoryResponse
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.w3c.dom.Entity
 import retrofit2.Response
 
 class StoryRepository(
@@ -43,13 +46,18 @@ class StoryRepository(
     fun getStoryFromDatabaseDao(token: Map<String, String>): LiveData<PagingData<EntityDaoStory>>{
         return Pager(
             config =  PagingConfig(
-                pageSize = 5
+                pageSize = 5,
+                maxSize = 15
             ),
             remoteMediator = StoryRemoteMediator(db, apiService, token),
             pagingSourceFactory = {
                 db.getService().getStory()
             }
         ).liveData
+    }
+
+    suspend fun getOnlyStory(): List<EntityDaoStory> {
+        return db.getService().getStoryListEntityDaoStory()
     }
 
     companion object {

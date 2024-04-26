@@ -4,30 +4,28 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.submissionaplikasistory.databinding.ItemPostWidgetBinding
-import com.example.submissionaplikasistory.datasource.local.EntityDaoStory
 import com.example.submissionaplikasistory.datasource.model.ListStoryItem
 
-class StoryAdapter(
+class StoryAdapter2(
     val callback: (String?) -> Unit
-): PagingDataAdapter<EntityDaoStory, StoryAdapter.StoryViewHolder>(diffUtil) {
+): PagingDataAdapter<ListStoryItem, StoryAdapter2.StoryViewHolder>(diffUtil) {
 
     companion object {
-        val diffUtil = object : DiffUtil.ItemCallback<EntityDaoStory>() {
+        private val diffUtil = object : DiffUtil.ItemCallback<ListStoryItem>() {
             override fun areItemsTheSame(
-                oldItem: EntityDaoStory,
-                newItem: EntityDaoStory
+                oldItem: ListStoryItem,
+                newItem: ListStoryItem
             ): Boolean {
                 return newItem == oldItem
             }
 
             override fun areContentsTheSame(
-                oldItem: EntityDaoStory,
-                newItem: EntityDaoStory
+                oldItem: ListStoryItem,
+                newItem: ListStoryItem
             ): Boolean {
                 return newItem.id == oldItem.id
             }
@@ -35,7 +33,8 @@ class StoryAdapter(
     }
 
     class StoryViewHolder(private val binding: ItemPostWidgetBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: EntityDaoStory, call: (String) -> Unit) {
+        fun bind(data: ListStoryItem) {
+            println("data $data")
             binding.apply {
                 tvItemName.text = data.name
                 tvDate.text = data.createdAt
@@ -44,7 +43,6 @@ class StoryAdapter(
                     .load(data.photoUrl)
                     .into(ivItemPhoto)
 
-                itemView.setOnClickListener { call(data.id) }
             }
         }
     }
@@ -60,10 +58,10 @@ class StoryAdapter(
     @SuppressLint("NewApi")
     override fun onBindViewHolder(holder: StoryViewHolder, position: Int) {
         val data = getItem(position)
+        println("adapter $data")
         if (data != null) {
-            holder.bind(data) {
-                callback(it)
-            }
+            holder.bind(data)
+            holder.itemView.setOnClickListener { callback(data.id) }
         }
 
     }

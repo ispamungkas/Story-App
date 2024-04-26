@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [EntityDaoStory::class, RemoteKeys::class], version = 1, exportSchema = false)
+@Database(entities = [EntityDaoStory::class, RemoteKeys::class], version = 2, exportSchema = false)
 abstract class DaoStoryConfig : RoomDatabase() {
     abstract fun getService(): DaoService
     abstract fun remoteKeyDao(): RemoteKeysDao

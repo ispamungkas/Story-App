@@ -27,6 +27,7 @@ import com.example.submissionaplikasistory.view.adapter.StoryAdapter
 import com.example.submissionaplikasistory.view.adapter.StoryAdapter2
 import com.example.submissionaplikasistory.view.viewmodel.StoryViewModel
 import com.example.submissionaplikasistory.view.viewmodel.UserViewModel
+import com.google.gson.Gson
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     private val storyViewModel: StoryViewModel by viewModels {
         Injection.getStoryRepositoryInstance(applicationContext)
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,21 +78,23 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpRecyclerView() {
         adapterRc = StoryAdapter { goToDetailPost(it) }
-        userViewModel.getUserSession().observe(this) {
-            storyViewModel.getStoryDao(Utils.getHeader(it.token!!)).observe(this) { result ->
-                Log.d("Main Activity", result.toString())
-                adapterRc.submitData(lifecycle, result)
-                binding.loading.visibility = View.GONE
-            }
-        }
 
         binding.rvList.adapter = adapterRc.withLoadStateFooter(
             footer = LoadingStateAdapter {
                 adapterRc.retry()
             }
         )
-    }
 
+        userViewModel.getUserSession().observe(this) {
+            println(it.token!!)
+            storyViewModel.getStoryDao(Utils.getHeader(it.token)).observe(this) { result ->
+                adapterRc.submitData(lifecycle, result)
+                binding.loading.visibility = View.GONE
+            }
+        }
+
+        userViewModel.getUserSession()
+    }
     private fun actionLogout() {
         userViewModel.deleteUserSession()
     }
@@ -105,6 +109,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun actionMap() {
         val intent = Intent(this, MapsCoverageStoryActivity::class.java)
+        storyViewModel.getAllStoryFromDatabase.observe(this) {
+            intent.putParcelableArrayListExtra(INTENT_MAPS, ArrayList(it))
+        }
         startActivity(intent)
     }
 
@@ -119,5 +126,9 @@ class MainActivity : AppCompatActivity() {
             R.id.action_map -> ( actionMap() )
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    companion object {
+        const val INTENT_MAPS = "intent_maps"
     }
 }

@@ -1,5 +1,6 @@
 package com.example.submissionaplikasistory.datasource.local
 
+import androidx.lifecycle.LiveData
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
@@ -13,7 +14,7 @@ interface DaoService {
     fun getStory() : PagingSource<Int, EntityDaoStory>
 
     @Query("SELECT * FROM ENTITYDAOSTORY")
-    fun getStoryListEntityDaoStory() : List<EntityDaoStory>
+    suspend fun getStoryListEntityDaoStory() : List<EntityDaoStory>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addStory(story: List<EntityDaoStory>)

@@ -3,6 +3,7 @@ package com.example.submissionaplikasistory.view.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -33,22 +34,10 @@ class StoryViewModel(
     private val _postResult: MutableLiveData<Resources<PostResponse>> = MutableLiveData()
     val postResult: LiveData<Resources<PostResponse>> = _postResult
 
-    fun getAllStory(token: String) = viewModelScope.launch {
-        val header = Utils.getHeader(token)
-        val responseResult = storyRepository.getAllStories(header)
-        try {
-            if (responseResult.isSuccessful) {
-                responseResult.body()?.listStory?.let {
-                    val result = Resources.OnSuccess(it)
-                    _story.postValue(result)
-                }
-            }
-        } catch (e: HttpException) {
-            val jsonInString = e.response()?.errorBody()?.string()
-            val errorBody = Gson().fromJson(jsonInString, ErrorResponse::class.java)
-            val errorMessage = errorBody.message
-            errorMessage?.let { _story.postValue(Resources.OnFailure(errorMessage)) }
-        }
+    val getAllStoryFromDatabase : MutableLiveData<List<EntityDaoStory>> = MutableLiveData()
+
+    init {
+        getDataStoryNotPaging()
     }
 
     fun getDetailStory(token: String, id: String) = viewModelScope.launch {
@@ -87,10 +76,11 @@ class StoryViewModel(
         }
     }
 
-//    fun storeStory(story: EntityDaoStory) = viewModelScope.launch {
-//        storyRepository.postStory(story)
-//    }
+    fun getStoryDao(token: Map<String, String>) : LiveData<PagingData<EntityDaoStory>> =
+        storyRepository.getStoryFromDatabaseDao(token).cachedIn(viewModelScope)
 
-    fun getStoryDao(token: Map<String, String>) : LiveData<PagingData<EntityDaoStory>> = storyRepository.getStoryFromDatabaseDao(token).cachedIn(viewModelScope)
+    private fun getDataStoryNotPaging() = viewModelScope.launch {
+        getAllStoryFromDatabase.postValue(storyRepository.getOnlyStory())
+    }
 
 }
