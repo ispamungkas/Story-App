@@ -3,6 +3,7 @@ package com.example.submissionaplikasistory.di
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import com.example.submissionaplikasistory.datasource.api.ApiConfiguration
 import com.example.submissionaplikasistory.datasource.local.DaoStoryConfig
 import com.example.submissionaplikasistory.repository.StoryRepository
 import com.example.submissionaplikasistory.repository.UserRepository
@@ -18,7 +19,8 @@ object Injection {
 
     fun getStoryRepositoryInstance(context: Context): ViewModelProviderFactory {
         val dao = DaoStoryConfig.getInstance(context)
-        val repo = StoryRepository.getInstance(dao)
+        val service = ApiConfiguration.getApiService()
+        val repo = StoryRepository.getInstance(dao, service)
         return ViewModelProviderFactory(repo, null)
     }
 }

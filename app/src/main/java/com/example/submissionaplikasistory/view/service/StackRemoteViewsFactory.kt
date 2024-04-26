@@ -5,6 +5,7 @@ import android.content.Intent
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import androidx.core.os.bundleOf
+import androidx.paging.PagingSource
 import com.bumptech.glide.Glide
 import com.example.submissionaplikasistory.R
 import com.example.submissionaplikasistory.datasource.local.DaoService
@@ -28,7 +29,7 @@ internal class StackRemoteViewsFactory(private val context: Context) : RemoteVie
 
     fun fetchData() {
         runBlocking {
-            currentList = connection.getStory()
+            currentList = connection.getStoryListEntityDaoStory()
             println(currentList)
         }
     }

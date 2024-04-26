@@ -41,4 +41,7 @@
     <string name="empty_text">Data empty</string>
     <string name="pick_stack_widget">You click image on index %1$s</string>
     <string name="value_login">Your Logged</string>
+    <string name="title_activity_maps_coverage_story">MapsCoverageStoryActivity</string>
+    <string name="map">Coverage Map Story</string>
+    <string name="retry">Retry</string>
 </resources>

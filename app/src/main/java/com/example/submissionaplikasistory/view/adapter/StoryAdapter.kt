@@ -3,58 +3,70 @@ package com.example.submissionaplikasistory.view.adapter
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.submissionaplikasistory.databinding.ItemPostWidgetBinding
+import com.example.submissionaplikasistory.datasource.local.EntityDaoStory
 import com.example.submissionaplikasistory.datasource.model.ListStoryItem
 
 class StoryAdapter(
     val callback: (String?) -> Unit
-): RecyclerView.Adapter<StoryAdapter.StoryViewHolder>() {
+): PagingDataAdapter<EntityDaoStory, StoryAdapter.StoryViewHolder>(diffUtil) {
 
-    private val diffUtil = object : DiffUtil.ItemCallback<ListStoryItem>() {
-        override fun areItemsTheSame(oldItem: ListStoryItem, newItem: ListStoryItem): Boolean {
-            return newItem == oldItem
-        }
+    companion object {
+        private val diffUtil = object : DiffUtil.ItemCallback<EntityDaoStory>() {
+            override fun areItemsTheSame(
+                oldItem: EntityDaoStory,
+                newItem: EntityDaoStory
+            ): Boolean {
+                return newItem == oldItem
+            }
 
-        override fun areContentsTheSame(
-            oldItem: ListStoryItem,
-            newItem: ListStoryItem
-        ): Boolean {
-            return newItem.id == oldItem.id
+            override fun areContentsTheSame(
+                oldItem: EntityDaoStory,
+                newItem: EntityDaoStory
+            ): Boolean {
+                return newItem.id == oldItem.id
+            }
         }
     }
 
-    inner class StoryViewHolder(val binding: ItemPostWidgetBinding): RecyclerView.ViewHolder(binding.root)
+    class StoryViewHolder(private val binding: ItemPostWidgetBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(data: EntityDaoStory, call: (String) -> Unit) {
+            println("data $data")
+            binding.apply {
+                tvItemName.text = data.name
+                tvDate.text = data.createdAt
+                tvDescriptionPost.text = data.description
+                Glide.with(itemView.context)
+                    .load(data.photoUrl)
+                    .into(ivItemPhoto)
 
-    private val asyncListDiffer = AsyncListDiffer(this, diffUtil)
-
-    fun setList (listStoryItem: List<ListStoryItem?>) {
-        asyncListDiffer.submitList(listStoryItem)
+                itemView.setOnClickListener { call(data.id) }
+            }
+        }
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): StoryAdapter.StoryViewHolder {
+    ): StoryViewHolder {
         val view = ItemPostWidgetBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return StoryViewHolder(view)
     }
 
     @SuppressLint("NewApi")
-    override fun onBindViewHolder(holder: StoryAdapter.StoryViewHolder, position: Int) {
-        val data = asyncListDiffer.currentList[position]
-        holder.binding.tvItemName.text = data.name
-        holder.binding.tvDate.text = data.createdAt
-        holder.binding.tvDescriptionPost.text = data.description
-        Glide.with(holder.itemView.context)
-            .load(data.photoUrl)
-            .into(holder.binding.ivItemPhoto)
+    override fun onBindViewHolder(holder: StoryViewHolder, position: Int) {
+        val data = getItem(position)
+        println("adapter $data")
+        if (data != null) {
+            holder.bind(data) {
+                callback(it)
+            }
+        }
 
-        holder.itemView.setOnClickListener { callback(data.id) }
     }
-
-    override fun getItemCount() = asyncListDiffer.currentList.size
 }

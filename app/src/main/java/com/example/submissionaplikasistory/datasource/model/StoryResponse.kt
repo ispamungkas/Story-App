@@ -8,7 +8,7 @@ import kotlinx.parcelize.RawValue
 data class StoryResponse(
 
     @field:SerializedName("listStory")
-	val listStory: List<ListStoryItem?>? = null,
+	val listStory: List<ListStoryItem>,
 
     @field:SerializedName("error")
 	val error: Boolean? = null,
@@ -33,11 +33,11 @@ data class ListStoryItem(
 	val description: String? = null,
 
 	@field:SerializedName("lon")
-	val lon: @RawValue Any? = null,
+	val lon: Double? = null,
 
 	@field:SerializedName("id")
 	val id: String? = null,
 
 	@field:SerializedName("lat")
-	val lat: @RawValue Any? = null
+	val lat: Double? = null
 ): Parcelable

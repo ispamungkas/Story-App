@@ -4,21 +4,25 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.RawValue
 
 @Entity
 @Parcelize
 data class EntityDaoStory(
-    @field:PrimaryKey(autoGenerate = true)
-    @field:ColumnInfo(name = "id")
-    var id: Int = 0,
+    val photoUrl: String? = null,
 
-    @field:ColumnInfo(name = "photoUrl")
-    val photoUrl: String,
+    val createdAt: String? = null,
 
-    @field:ColumnInfo(name = "name")
-    val name: String,
+    val name: String? = null,
 
-    @field:ColumnInfo(name = "description")
-    val desc: String
+    val description: String? = null,
+
+    val lon: Double? = null,
+
+    @PrimaryKey
+    val id: String,
+
+    val lat: Double? = null
 ) : Parcelable

@@ -16,8 +16,11 @@ import android.view.Window
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.exifinterface.media.ExifInterface
+import androidx.paging.PagingSource
 import com.example.submissionaplikasistory.BuildConfig
 import com.example.submissionaplikasistory.R
+import com.example.submissionaplikasistory.datasource.local.EntityDaoStory
+import com.example.submissionaplikasistory.datasource.model.StoryResponse
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -146,5 +149,23 @@ class Utils {
                 source, 0, 0, source.width, source.height, matrix, true
             )
         }
+    }
+
+    fun convertResponseStoryEntityDaoStory(response: StoryResponse?) : List<EntityDaoStory> {
+        val resultListEntityDaoStory = mutableListOf<EntityDaoStory>()
+        val listResponse = response?.listStory
+        listResponse?.map {
+            val value = EntityDaoStory(
+                it?.photoUrl,
+                it?.createdAt,
+                it?.name,
+                it?.description,
+                it?.lon,
+                it?.id.toString(),
+                it?.lat
+            )
+            resultListEntityDaoStory.add(value)
+        }
+        return resultListEntityDaoStory
     }
 }

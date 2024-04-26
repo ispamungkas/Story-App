@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.example.submissionaplikasistory.datasource.local.EntityDaoStory
 import com.example.submissionaplikasistory.datasource.model.ErrorResponse
 import com.example.submissionaplikasistory.datasource.model.ListStoryItem
@@ -22,8 +24,8 @@ class StoryViewModel(
     private val storyRepository: StoryRepository,
 ) : ViewModel() {
 
-    private val _story : MutableLiveData<Resources<List<ListStoryItem?>>> = MutableLiveData()
-    val story: LiveData<Resources<List<ListStoryItem?>>> = _story
+    private val _story : MutableLiveData<Resources<List<ListStoryItem>>> = MutableLiveData()
+    val story: LiveData<Resources<List<ListStoryItem>>> = _story
 
     private val _detailStory: MutableLiveData<Resources<Story>> = MutableLiveData()
     val detailStory: LiveData<Resources<Story>> = _detailStory
@@ -85,12 +87,10 @@ class StoryViewModel(
         }
     }
 
-    fun storeStory(story: EntityDaoStory) = viewModelScope.launch {
-        storyRepository.postStory(story)
-    }
+//    fun storeStory(story: EntityDaoStory) = viewModelScope.launch {
+//        storyRepository.postStory(story)
+//    }
 
-    fun getStoryDao() : List<EntityDaoStory> {
-        return storyRepository.getStoryFromDatabaseDao()
-    }
+    fun getStoryDao(token: Map<String, String>) : LiveData<PagingData<EntityDaoStory>> = storyRepository.getStoryFromDatabaseDao(token).cachedIn(viewModelScope)
 
 }

@@ -42,4 +42,7 @@
     <string name="empty_text">Data Kosong</string>
     <string name="pick_stack_widget">Anda mengklik image dengan index %1$s</string>
     <string name="value_login">Berhasil Login</string>
+    <string name="title_activity_maps_coverage_story">MapsCoverageStoryActivity</string>
+    <string name="map">Jangkauan Cerita</string>
+    <string name="retry">Ulangi</string>
 </resources>
