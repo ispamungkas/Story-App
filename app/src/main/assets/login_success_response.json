@@ -1,0 +1,9 @@
+{
+  "error": false,
+  "message": "success",
+  "loginResult": {
+    "userId": "user-JbNrfFCRVf-klM21",
+    "name": "maspam2",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyLUpiTnJmRkNSVmYta2xNMjEiLCJpYXQiOjE3MTQxNDM0MTB9.pqmL19uC625rF99M9XqeSLhpqegDg20vRNWLjbNfQvU"
+  }
+}

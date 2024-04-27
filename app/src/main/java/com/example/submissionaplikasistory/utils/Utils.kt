@@ -16,7 +16,6 @@ import android.view.Window
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.exifinterface.media.ExifInterface
-import androidx.paging.PagingSource
 import com.example.submissionaplikasistory.BuildConfig
 import com.example.submissionaplikasistory.R
 import com.example.submissionaplikasistory.datasource.local.EntityDaoStory
@@ -26,8 +25,12 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 class Utils {
 
@@ -156,16 +159,23 @@ class Utils {
         val listResponse = response?.listStory
         listResponse?.map {
             val value = EntityDaoStory(
-                it?.photoUrl,
-                it?.createdAt,
-                it?.name,
-                it?.description,
-                it?.lon,
-                it?.id.toString(),
-                it?.lat
+                it.photoUrl,
+                it.createdAt,
+                it.name,
+                it.description,
+                it.lon,
+                it.id.toString(),
+                it.lat
             )
             resultListEntityDaoStory.add(value)
         }
         return resultListEntityDaoStory
+    }
+
+    fun formatDate(currentDateString: String): String {
+        val instant = Instant.parse(currentDateString)
+        val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy | HH:mm")
+            .withZone(ZoneId.of(TimeZone.getDefault().id))
+        return formatter.format(instant)
     }
 }

@@ -1,33 +1,24 @@
 package com.example.submissionaplikasistory.view.home
 
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import com.example.submissionaplikasistory.R
-
+import com.example.submissionaplikasistory.databinding.ActivityMapsCoverageStoryBinding
+import com.example.submissionaplikasistory.datasource.local.EntityDaoStory
+import com.example.submissionaplikasistory.di.Injection
+import com.example.submissionaplikasistory.view.viewmodel.StoryViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import com.example.submissionaplikasistory.databinding.ActivityMapsCoverageStoryBinding
-import com.example.submissionaplikasistory.datasource.local.EntityDaoStory
-import com.example.submissionaplikasistory.datasource.model.ListStoryItem
-import com.example.submissionaplikasistory.di.Injection
-import com.example.submissionaplikasistory.utils.Resources
-import com.example.submissionaplikasistory.utils.dataStore
-import com.example.submissionaplikasistory.view.viewmodel.StoryViewModel
-import com.example.submissionaplikasistory.view.viewmodel.UserViewModel
-import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapStyleOptions
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.google.android.gms.maps.model.MarkerOptions
 
 class MapsCoverageStoryActivity : AppCompatActivity(), OnMapReadyCallback {
 

@@ -3,7 +3,6 @@ package com.example.submissionaplikasistory.view.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -58,10 +57,10 @@ class StoryViewModel(
         }
     }
 
-    fun postStory(token: String, description: RequestBody, file: MultipartBody.Part) = viewModelScope.launch {
+    fun postStory(token: String, description: RequestBody, file: MultipartBody.Part, lat: Float?, lon: Float?) = viewModelScope.launch {
         val header = Utils.getHeader(token)
         try {
-            val responseResult = storyRepository.postStory(header, description, file)
+            val responseResult = storyRepository.postStory(header, description, file, lat, lon)
             if (responseResult.isSuccessful && responseResult.body()?.error == false) {
                 responseResult.body()?.let {
                     val result = Resources.OnSuccess(it)

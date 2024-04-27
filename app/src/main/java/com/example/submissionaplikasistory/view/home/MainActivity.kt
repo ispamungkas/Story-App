@@ -2,32 +2,23 @@ package com.example.submissionaplikasistory.view.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.paging.LoadStateAdapter
-import androidx.paging.PagingData
-import androidx.paging.map
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.submissionaplikasistory.R
 import com.example.submissionaplikasistory.databinding.ActivityMainBinding
-import com.example.submissionaplikasistory.datasource.local.EntityDaoStory
-import com.example.submissionaplikasistory.datasource.model.ListStoryItem
 import com.example.submissionaplikasistory.di.Injection
-import com.example.submissionaplikasistory.utils.Resources
 import com.example.submissionaplikasistory.utils.Utils
 import com.example.submissionaplikasistory.utils.dataStore
 import com.example.submissionaplikasistory.view.LoginActivity
 import com.example.submissionaplikasistory.view.adapter.LoadingStateAdapter
 import com.example.submissionaplikasistory.view.adapter.StoryAdapter
-import com.example.submissionaplikasistory.view.adapter.StoryAdapter2
 import com.example.submissionaplikasistory.view.viewmodel.StoryViewModel
 import com.example.submissionaplikasistory.view.viewmodel.UserViewModel
-import com.google.gson.Gson
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -47,7 +38,6 @@ class MainActivity : AppCompatActivity() {
         val action = supportActionBar
         action?.title = ContextCompat.getString(this, R.string.story)
 
-        // Check user session
         userViewModel.getUserSession().observe(this) {
             if (it.token == null) {
                 goToLoginPage()
@@ -62,7 +52,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         setUpRecyclerView()
-
     }
 
     private fun goToLoginPage() {
@@ -86,8 +75,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         userViewModel.getUserSession().observe(this) {
-            println(it.token!!)
-            storyViewModel.getStoryDao(Utils.getHeader(it.token)).observe(this) { result ->
+            storyViewModel.getStoryDao(Utils.getHeader(it.token!!)).observe(this) { result ->
                 adapterRc.submitData(lifecycle, result)
                 binding.loading.visibility = View.GONE
             }
@@ -95,11 +83,12 @@ class MainActivity : AppCompatActivity() {
 
         userViewModel.getUserSession()
     }
+
     private fun actionLogout() {
         userViewModel.deleteUserSession()
     }
 
-    private fun goToDetailPost(id: String?){
+    private fun goToDetailPost(id: String?) {
         val intent = Intent(this@MainActivity, DetailPostActivity::class.java)
         id?.let {
             intent.putExtra(DetailPostActivity.ID_POST, it)
@@ -122,8 +111,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_logout -> { actionLogout() }
-            R.id.action_map -> ( actionMap() )
+            R.id.action_logout -> {
+                actionLogout()
+            }
+
+            R.id.action_map -> (actionMap())
         }
         return super.onOptionsItemSelected(item)
     }

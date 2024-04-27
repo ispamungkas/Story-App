@@ -1,0 +1,96 @@
+{
+  "error": false,
+  "message": "Stories fetched successfully",
+  "listStory": [
+    {
+      "id": "story-jMy-64k11z0FOJl5",
+      "name": "galihh",
+      "description": "tiang",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1714180615445_b2d7f35e1eabe41d657f.jpg",
+      "createdAt": "2024-04-27T01:16:55.449Z",
+      "lat": -6.5359137,
+      "lon": 106.7944001
+    },
+    {
+      "id": "story-IJDnXB2X8_0CqPc6",
+      "name": "Smithy Werben Jegerman Jensen",
+      "description": "lorem Ipsum",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1714163014593_7862050220900face384.jpg",
+      "createdAt": "2024-04-26T20:23:34.595Z",
+      "lat": -6.5896223,
+      "lon": 106.8013165
+    },
+    {
+      "id": "story-ANwbyypf6eoj64X8",
+      "name": "Lorem Ipsum",
+      "description": "p",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1714162795298_6cdb60750e22c01b3ecc.jpg",
+      "createdAt": "2024-04-26T20:19:55.300Z",
+      "lat": -6.5896971,
+      "lon": 106.8012203
+    },
+    {
+      "id": "story-JfCUS8ta-oKlxYP5",
+      "name": "Lorem Ipsum",
+      "description": "tes",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1714162557588_c01da884c6964ceacec9.jpg",
+      "createdAt": "2024-04-26T20:15:57.591Z",
+      "lat": -6.8957643,
+      "lon": 107.6338462
+    },
+    {
+      "id": "story-prndeafkZBAroaZe",
+      "name": "Doel",
+      "description": "assalamualaikum semifinal",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1714158377897_caf89adc3a8e6a304ea8.jpg",
+      "createdAt": "2024-04-26T19:06:17.899Z",
+      "lat": -6.4864864,
+      "lon": 108.314995
+    },
+    {
+      "id": "story-SnuVHFeuovAc9Ar-",
+      "name": "Lorem Ipsum",
+      "description": "p",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1714156494967_32d67c32901c483db0d6.jpg",
+      "createdAt": "2024-04-26T18:34:54.969Z",
+      "lat": -6.8957643,
+      "lon": 107.6338462
+    },
+    {
+      "id": "story-DMcHo5jR08jPgTA2",
+      "name": "Sumanto",
+      "description": "coba",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1714155045051_77327b52987a14e91ced.jpg",
+      "createdAt": "2024-04-26T18:10:45.056Z",
+      "lat": -6.4864864,
+      "lon": 108.314995
+    },
+    {
+      "id": "story-nMOKiKHx_PfOMaN1",
+      "name": "Youth",
+      "description": "ehehe",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1714150393515_0a645946631bab8d9537.jpg",
+      "createdAt": "2024-04-26T16:53:13.518Z",
+      "lat": -6.4864864,
+      "lon": 108.314995
+    },
+    {
+      "id": "story-9V-6ehv8OPqId7Qz",
+      "name": "Youth",
+      "description": "misi abang²an asean mau lewat",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1714150101537_fc974abd52a52795cb4c.jpg",
+      "createdAt": "2024-04-26T16:48:21.540Z",
+      "lat": -6.4864864,
+      "lon": 108.314995
+    },
+    {
+      "id": "story-P3hBWwC6ImSVdaI5",
+      "name": "Youth",
+      "description": "Korea kami singkirin nih boss",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1714149385234_1443bd4426bcc2200068.jpg",
+      "createdAt": "2024-04-26T16:36:25.235Z",
+      "lat": -6.4864864,
+      "lon": 108.314995
+    }
+  ]
+}

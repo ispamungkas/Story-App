@@ -22,6 +22,8 @@ import com.example.submissionaplikasistory.utils.Utils.Companion.reduceImage
 import com.example.submissionaplikasistory.utils.dataStore
 import com.example.submissionaplikasistory.view.viewmodel.StoryViewModel
 import com.example.submissionaplikasistory.view.viewmodel.UserViewModel
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -30,14 +32,16 @@ import okhttp3.RequestBody.Companion.toRequestBody
 class PostActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPostBinding
     private lateinit var bindingDialog: DialogCustomResponseBinding
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private val storyViewModel: StoryViewModel by viewModels {
         Injection.getStoryRepositoryInstance(applicationContext)
     }
     private val userViewModel: UserViewModel by viewModels {
         Injection.getUserRepositoryInstance(application.dataStore)
     }
-
     private var currentImage: Uri? = null
+    private var currentLat: Double? = null
+    private var currentLng: Double? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +51,7 @@ class PostActivity : AppCompatActivity() {
 
         val dialog = Utils.dialogInstance(this)
 
-        if (!checkPermission()) {
+        if (!checkPermission(Manifest.permission.CAMERA)) {
             requestPermission.launch(Manifest.permission.CAMERA)
         }
 
@@ -55,13 +59,17 @@ class PostActivity : AppCompatActivity() {
 
         storyViewModel.postResult.observe(this) {
             when (it) {
-                is Resources.Loading -> { binding.loading.visibility = View.VISIBLE }
+                is Resources.Loading -> {
+                    binding.loading.visibility = View.VISIBLE
+                }
+
                 is Resources.OnFailure -> {
                     binding.loading.visibility = View.GONE
                     dialog.show()
                     dialog.setContentView(bindingDialog.root)
-                    showSnackBar (it.message, dialog, false, bindingDialog)
+                    showSnackBar(it.message, dialog, false, bindingDialog)
                 }
+
                 is Resources.OnSuccess -> {
                     binding.loading.visibility = View.GONE
                     dialog.show()
@@ -79,11 +87,77 @@ class PostActivity : AppCompatActivity() {
                     uploadImage(value.token)
                 }
             }
+
+            checkLocation.setOnCheckedChangeListener { _, isChecked ->
+                checkLocationPermission()
+                if (isChecked) {
+                    println("lat $currentLat long: $currentLng")
+                } else {
+                    currentLat = null
+                    currentLng = null
+                    println("lat $currentLat long: $currentLng")
+
+                }
+            }
         }
+
+        fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(this@PostActivity)
 
     }
 
-    private fun showSnackBar(messages: String, dialog: Dialog, isSuccess: Boolean, bindingDialog: DialogCustomResponseBinding) {
+    private fun checkLocationPermission() {
+        if (
+            checkPermission(Manifest.permission.ACCESS_FINE_LOCATION) &&
+            checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+        ) {
+            fusedLocationProviderClient.lastLocation.addOnSuccessListener {
+                if (it != null) {
+                    currentLat = it.latitude
+                    currentLng = it.longitude
+                } else {
+                    Toast.makeText(this, getString(R.string.enable_gps), Toast.LENGTH_SHORT).show()
+                }
+            }
+        } else {
+            requestPermissionLocation.launch(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+            )
+        }
+    }
+
+    private val requestPermissionLocation = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        when {
+            permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false -> {
+                checkLocationPermission()
+            }
+
+            permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false -> {
+                checkLocationPermission()
+            }
+
+            else -> {
+                Toast.makeText(
+                    this@PostActivity,
+                    resources.getString(R.string.denied),
+                    Toast.LENGTH_SHORT
+                ).show()
+                binding.checkLocation.isChecked = false
+            }
+        }
+    }
+
+    private fun showSnackBar(
+        messages: String,
+        dialog: Dialog,
+        isSuccess: Boolean,
+        bindingDialog: DialogCustomResponseBinding
+    ) {
         dialog.setCancelable(false)
         if (isSuccess) {
             bindingDialog.apply {
@@ -121,10 +195,20 @@ class PostActivity : AppCompatActivity() {
             )
 
             if (requestBodyDescription != null) {
-                storyViewModel.postStory(tokenUser, requestBodyDescription, multipartImage)
+                storyViewModel.postStory(
+                    tokenUser,
+                    requestBodyDescription,
+                    multipartImage,
+                    if (currentLng != null) currentLat?.toFloat() else null,
+                    if (currentLng != null) currentLat?.toFloat() else null
+                )
             }
         } else {
-            Toast.makeText(this@PostActivity, resources.getString(R.string.warning), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this@PostActivity,
+                resources.getString(R.string.warning),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -134,18 +218,26 @@ class PostActivity : AppCompatActivity() {
         requestOpenCamera.launch(currentImage)
     }
 
-    private fun checkPermission() = ContextCompat.checkSelfPermission(
+    private fun checkPermission(permission: String) = ContextCompat.checkSelfPermission(
         this,
-        Manifest.permission.CAMERA
+        permission
     ) == PackageManager.PERMISSION_GRANTED
 
     private val requestPermission = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) {
         if (it) {
-            Toast.makeText(this@PostActivity, resources.getString(R.string.granted), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this@PostActivity,
+                resources.getString(R.string.granted),
+                Toast.LENGTH_SHORT
+            ).show()
         } else {
-            Toast.makeText(this@PostActivity, resources.getString(R.string.denied), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this@PostActivity,
+                resources.getString(R.string.denied),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 

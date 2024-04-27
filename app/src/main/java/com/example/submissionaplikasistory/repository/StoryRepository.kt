@@ -6,23 +6,16 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.PagingSource
 import androidx.paging.liveData
-import com.example.submissionaplikasistory.datasource.StoryPagingSource
 import com.example.submissionaplikasistory.datasource.StoryRemoteMediator
 import com.example.submissionaplikasistory.datasource.api.ApiConfiguration
 import com.example.submissionaplikasistory.datasource.api.ApiService
 import com.example.submissionaplikasistory.datasource.local.DaoStoryConfig
 import com.example.submissionaplikasistory.datasource.local.EntityDaoStory
 import com.example.submissionaplikasistory.datasource.model.DetailStoryResponse
-import com.example.submissionaplikasistory.datasource.model.ListStoryItem
 import com.example.submissionaplikasistory.datasource.model.PostResponse
-import com.example.submissionaplikasistory.datasource.model.StoryResponse
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import org.w3c.dom.Entity
 import retrofit2.Response
 
 class StoryRepository(
@@ -30,16 +23,12 @@ class StoryRepository(
     private val apiService: ApiService
 ) {
 
-    suspend fun getAllStories(header: Map<String, String>): Response<StoryResponse> {
-        return ApiConfiguration.getApiService().getStories(header)
-    }
-
     suspend fun getDetailStory(header: Map<String, String>, id: String): Response<DetailStoryResponse> {
         return ApiConfiguration.getApiService().getDetailStory(header, id)
     }
 
-    suspend fun postStory(header: Map<String, String>, description: RequestBody, file: MultipartBody.Part): Response<PostResponse> {
-        return ApiConfiguration.getApiService().postStory(header, description, file)
+    suspend fun postStory(header: Map<String, String>, description: RequestBody, file: MultipartBody.Part, lat: Float?, lon: Float?): Response<PostResponse> {
+        return ApiConfiguration.getApiService().postStory(header, description, file, lat, lon)
     }
 
     @OptIn(ExperimentalPagingApi::class)

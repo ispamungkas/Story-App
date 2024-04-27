@@ -4,13 +4,12 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.submissionaplikasistory.databinding.ItemPostWidgetBinding
 import com.example.submissionaplikasistory.datasource.local.EntityDaoStory
-import com.example.submissionaplikasistory.datasource.model.ListStoryItem
+import com.example.submissionaplikasistory.utils.Utils
 
 class StoryAdapter(
     val callback: (String?) -> Unit
@@ -38,7 +37,7 @@ class StoryAdapter(
         fun bind(data: EntityDaoStory, call: (String) -> Unit) {
             binding.apply {
                 tvItemName.text = data.name
-                tvDate.text = data.createdAt
+                tvDate.text = Utils().formatDate(data.createdAt!!)
                 tvDescriptionPost.text = data.description
                 Glide.with(itemView.context)
                     .load(data.photoUrl)

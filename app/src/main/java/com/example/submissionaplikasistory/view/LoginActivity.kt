@@ -25,7 +25,6 @@ class LoginActivity : AppCompatActivity() {
         Injection.getUserRepositoryInstance(application.dataStore)
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

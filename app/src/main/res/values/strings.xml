@@ -44,4 +44,6 @@
     <string name="title_activity_maps_coverage_story">MapsCoverageStoryActivity</string>
     <string name="map">Coverage Map Story</string>
     <string name="retry">Retry</string>
+    <string name="location_agreement">Do want to share your location for post?</string>
+    <string name="enable_gps">Please enable your GPS</string>
 </resources>

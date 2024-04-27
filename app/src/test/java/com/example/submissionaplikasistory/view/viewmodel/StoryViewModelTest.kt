@@ -1,6 +1,5 @@
 package com.example.submissionaplikasistory.view.viewmodel
 
-import android.annotation.SuppressLint
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,15 +17,14 @@ import com.example.submissionaplikasistory.view.adapter.StoryAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
-import kotlin.math.exp
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
@@ -39,7 +37,7 @@ class StoryViewModelTest {
     private lateinit var storyRepository: StoryRepository
 
     @Test()
-    fun `not null when get story and return the output`() = runTest {
+    fun `can get story and return the output`() = runTest {
         val getDummyEntity = DataDummy.generateEntityResponse()
         val data = QuotePagingSource.snapshot(getDummyEntity)
         val expected = MutableLiveData<PagingData<EntityDaoStory>>()

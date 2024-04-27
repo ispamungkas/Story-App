@@ -3,6 +3,7 @@ package com.example.submissionaplikasistory.repository
 import com.example.submissionaplikasistory.datasource.api.ApiConfiguration
 import com.example.submissionaplikasistory.datasource.model.LoginResponse
 import com.example.submissionaplikasistory.datasource.model.RegisterResponse
+import com.example.submissionaplikasistory.utils.wrapEspressoIdlingResource
 import retrofit2.Response
 
 class UserRepository {
@@ -19,7 +20,9 @@ class UserRepository {
         email: String,
         password: String
     ): Response<LoginResponse> {
-        return ApiConfiguration.getApiService().login(email, password)
+        wrapEspressoIdlingResource {
+            return ApiConfiguration.getApiService().login(email, password)
+        }
     }
     
     companion object {

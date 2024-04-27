@@ -7,6 +7,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiConfiguration {
+
+    var api_key = BuildConfig.BASE_URL_API_STORY
     fun getApiService(): ApiService {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else
@@ -17,12 +19,11 @@ object ApiConfiguration {
             .build()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URL_API_STORY)
+            .baseUrl(api_key)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         return retrofit.create(ApiService::class.java)
     }
-
 }
